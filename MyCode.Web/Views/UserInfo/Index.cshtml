@@ -1,0 +1,71 @@
+﻿@using PagedList.Mvc; //import this so we get our HTML Helper
+@using PagedList; //import this so we can cast our list to IPagedList (only necessary because ViewBag is dynamic)
+@using MyCode.Model;
+@model UserInfo
+@{
+    ViewBag.Title = "User List";
+}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Filter</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="dataTables_wrapper form-horizontal dt-bootstrap">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">用户名：</label>
+                        <div class="col-sm-2">
+                            <input type="search" class="form-control input-sm" placeholder="" aria-controls="example1">
+                        </div>
+                        <label class="control-label col-sm-2">创建时间：</label>
+                        <div class="col-sm-2">
+                            <input type="search" class="form-control input-sm" placeholder="" aria-controls="example1">
+                        </div>
+                        <label class="control-label col-sm-2">创建时间：</label>
+                        <div class="col-sm-2">
+                            <input type="search" class="form-control input-sm" placeholder="" aria-controls="example1">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="button" class="btn btn-success pull-right">
+                                <i class="fa fa-download"></i> Generate Excel
+                            </button>
+                            <button type="submit" class="btn btn-primary pull-right margin-r-5">
+                                <i class="fa fa-search"></i>Search
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table class="table table-bordered table-striped dataTable" role="grid" >
+                            <thead>
+                               <tr><th></th><th></th></tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in (IEnumerable<UserInfo>)ViewBag.List)
+                                {
+                                    <tr><td>@item.ID</td>@item.Name<td>@item.IsDeleted</td></tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    @Html.PagedListPager((IPagedList)ViewBag.List, page => Url.Action("Index", new { page = page, }), PagedListRenderOptions.MinimalWithItemCountText)
+                </div>
+                <div class="row">
+                    <div class="col-sm-5"><div class="dataTables_info" id="example1_info" role="status" aria-live="polite">Showing 1 to 10 of 57 entries</div></div><div class="col-sm-7">
+                        <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                            <ul class="pagination"><li class="paginate_button previous disabled" id="example1_previous"><a href="#" aria-controls="example1" data-dt-idx="0" tabindex="0">Previous</a></li><li class="paginate_button active"><a href="#" aria-controls="example1" data-dt-idx="1" tabindex="0">1</a></li><li class="paginate_button "><a href="#" aria-controls="example1" data-dt-idx="2" tabindex="0">2</a></li><li class="paginate_button "><a href="#" aria-controls="example1" data-dt-idx="3" tabindex="0">3</a></li><li class="paginate_button "><a href="#" aria-controls="example1" data-dt-idx="4" tabindex="0">4</a></li><li class="paginate_button "><a href="#" aria-controls="example1" data-dt-idx="5" tabindex="0">5</a></li><li class="paginate_button "><a href="#" aria-controls="example1" data-dt-idx="6" tabindex="0">6</a></li><li class="paginate_button next" id="example1_next"><a href="#" aria-controls="example1" data-dt-idx="7" tabindex="0">Next</a></li></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+</div>
+<!-- /.col -->

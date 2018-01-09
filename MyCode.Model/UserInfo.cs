@@ -10,9 +10,11 @@ namespace MyCode.Model
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public int Age { get; set; }
-        public DateTime CreationTime { get; set; }
+        public string Password { get; set; }
+        public Guid RoleID { get; set; }
+        public DateTime CreateTime { get; set; }
         public DateTime LastChangeTime { get; set; }
         public bool IsDeleted { get; set; }
+        public string Remark { get; set; }
     }
 }

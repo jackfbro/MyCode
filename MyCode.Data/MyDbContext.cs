@@ -12,7 +12,7 @@ namespace MyCode.Data
     public class MyDbContext:DbContext
     {
         public MyDbContext()
-            : base("name=ConnectionString")
+            : base("MyDbContext")
         {
             //this.Configuration.AutoDetectChangesEnabled = false;//关闭自动跟踪对象的属性变化 false,TryUpdateModel将不可用
             base.Configuration.ValidateOnSaveEnabled = false;

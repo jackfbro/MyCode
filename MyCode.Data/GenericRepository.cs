@@ -13,6 +13,10 @@ namespace MyCode.Data
     {
         private DbContext context = DbContextFactory.CreateCurrentDbContext();
         private DbSet<T> dbSet;
+        public GenericRepository()
+        {
+            this.dbSet = context.Set<T>();
+        }
         public GenericRepository(MyDbContext context)
         {
             this.context = context;
@@ -109,10 +113,10 @@ namespace MyCode.Data
             list = isAsc ? list.OrderBy(orderLambda) : list.OrderByDescending(orderLambda);
             return list;
         }
-        public IQueryable<T> GetPageList<S>(Expression<Func<T, bool>> whereLambda, Expression<Func<T, S>> orderLambda, bool isAsc, int pageIndex, int pageSize, out int pageCount)
+        public IQueryable<T> GetPagedList<S>(Expression<Func<T, bool>> whereLambda, Expression<Func<T, S>> orderLambda, bool isAsc, int pageIndex, int pageSize, out int totalCount)
         {
-            var temp = context.Set<T>().Where<T>(whereLambda);
-            pageCount = temp.Count();
+            var temp = dbSet.Where<T>(whereLambda);
+            totalCount = temp.Count();
             temp = isAsc ? temp.OrderBy(orderLambda) : temp.OrderByDescending(orderLambda);
             return temp.Skip((pageIndex - 1) * pageSize).Take(pageSize);
         }
